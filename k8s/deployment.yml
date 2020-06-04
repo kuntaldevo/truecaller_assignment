@@ -1,0 +1,33 @@
+#You can add a namespace section here or just create it on run time.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cassandra-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cassandra
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      containers:
+        - name: cassandra
+          image: dtr.truecaller.org/ruby_on_rails:version
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "500Mi"
+          command: ["/bin/sh", "-c"]
+            args:
+              - echo "some_commands";
+          ports:
+            - containerPort: 3000
+      nodeSelector:
+        role-id: cass-nodes
+
+
